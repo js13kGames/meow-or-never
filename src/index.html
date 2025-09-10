@@ -48,6 +48,7 @@ a {
 	position: fixed;
 	top: 50svh; left: 50vw;
 	transform: translate(-50%, -50%) translate(var(--dx, 0), var(--dy, 0));
+	transition: transform .35s ease;
 	width: var(--card-width); height: var(--card-height);
 	border-radius: .1em;
 	background: var(--fg); color: var(--bg);
@@ -58,7 +59,6 @@ a {
 	justify-content: center;
 	filter: drop-shadow(0 0 .1em black);
 	user-select: none;
-	transition: transform 360ms cubic-bezier(.2,.7,.2,1), box-shadow 240ms ease, outline-color 160ms ease;
 	outline: 0 solid transparent;
 	will-change: transform;
 }
