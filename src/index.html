@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, user-scalable=0"/>
+<style>
+:root {
+	--card-width: 1.3em;
+	--card-height: 2em;
+	--gap: .2em;
+	--edge-gap: calc(var(--card-height) / 2 + var(--gap));
+	--fg: #fff;
+	--bg: #123;
+}
+
+html, body {
+	margin: 0; padding: 0;
+	height: 100%;
+	overflow: hidden;
+	background: var(--bg);
+	font: 130% monospace; color: var(--fg);
+}
+
+a {
+	color: var(--fg);
+	text-decoration: none;
+}
+
+.dialog {
+	position: fixed;
+	top: 50svh; left: 50vw;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+
+.play {
+	background: var(--fg); color: var(--bg);
+	display: block;
+	padding: .1em;
+	font-size: 250%;
+	font-weight: bold;
+	text-align: center;
+	border-radius: .1em;
+	margin: .2em;
+}
+
+.card {
+	position: fixed;
+	top: 50svh; left: 50vw;
+	transform: translate(-50%, -50%) translate(var(--dx, 0), var(--dy, 0));
+	width: var(--card-width); height: var(--card-height);
+	border-radius: .1em;
+	background: var(--fg); color: var(--bg);
+	font-size: 250%;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	filter: drop-shadow(0 0 .1em black);
+	user-select: none;
+	transition: transform 360ms cubic-bezier(.2,.7,.2,1), box-shadow 240ms ease, outline-color 160ms ease;
+	outline: 0 solid transparent;
+	will-change: transform;
+}
+
+.card.top, .card.bottom {
+	--dx: calc(var(--i, 0) * (var(--card-width) + var(--gap)));
+}
+.card.left, .card.right {
+	--dy: calc(var(--i, 0) * (var(--card-width) + var(--gap)));
+}
+
+.card.top    {
+	--dy: calc(-50svh + var(--edge-gap));
+	transform: translate(-50%, -50%) translate(var(--dx, 0), var(--dy, 0)) rotateZ(180deg);
+}
+.card.bottom {
+	--dy: calc(50svh - var(--edge-gap));
+}
+.card.left   {
+	--dx: calc(-50vw + var(--edge-gap));
+	transform: translate(-50%, -50%) translate(var(--dx, 0), var(--dy, 0)) rotateZ(90deg);
+}
+.card.right  {
+	--dx: calc(50vw - var(--edge-gap));
+	transform: translate(-50%, -50%) translate(var(--dx, 0), var(--dy, 0)) rotateZ(-90deg);
+}
+
+@supports not (height: 1svh) {
+	.card {
+		top: 50vh; left: 50vw;
+	}
+	.card.top {
+		--dy: calc(-50vh + var(--edge-gap));
+	}
+	.card.bottom {
+		--dy: calc(50vh - var(--edge-gap));
+	}
+}
+</style>
+</head>
+<body>
+</body>
+<script src="src.js"></script>
+</html>
