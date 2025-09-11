@@ -1,11 +1,17 @@
 "use strict"
 
 const SLOTS = [-1.5, -0.5, 0.5, 1.5],
-	PLAYERS = []
+	PLAYERS = [],
+	TURNBARS = []
 
 let zIndex = 999,
 	turn = 0,
 	topCard
+
+function updateTurnBars() {
+	TURNBARS.forEach((e) => e.style.visibility = "hidden")
+	TURNBARS[turn].style.visibility = "visible"
+}
 
 function alignCard(card, side, slot) {
 	card.className = "card " + (side || "")
@@ -48,6 +54,7 @@ function playCard(card) {
 
 	topCard = card
 	turn = ++turn % PLAYERS.length
+	updateTurnBars()
 }
 
 function newCard(side, slot) {
@@ -71,6 +78,19 @@ function newCard(side, slot) {
 }
 
 function setup(nplayers) {
+	function createElement(name, className, html) {
+		const e = document.createElement(name)
+		if (className) { e.className = className }
+		if (html) { e.innerHTML = html }
+		return e
+	}
+
+	function addElement(name, className, html) {
+		const e = createElement(name, className, html)
+		document.body.appendChild(e)
+		return e
+	}
+
 	document.body.innerHTML = ""
 
 	const sides = ["bottom", "left", "top", "right"],
@@ -78,10 +98,16 @@ function setup(nplayers) {
 	for (let i = 0, step = nplayers == 2 ? 2 : 1; i < nplayers; ++i) {
 		const side = sides[i * step]
 		PLAYERS.push(side)
+
+		const bar = addElement("div", "bar " + side, "TURN")
+		TURNBARS.push(bar)
+
 		for (let j = 0; j < cardsPerPlayer; ++j) {
 			document.body.appendChild(newCard(side, j))
 		}
 	}
+
+	updateTurnBars()
 }
 
 window.onload = function() {

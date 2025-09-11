@@ -97,6 +97,37 @@ a {
 		--dy: calc(50vh - var(--edge-gap));
 	}
 }
+
+.bar {
+	position: fixed;
+	background: var(--fg);
+	color: var(--bg);
+	font-size: 80%;
+	padding: .5em;
+	visibility: hidden;
+}
+
+.bar.bottom {
+	left: 0; right: 0; bottom: 0;
+}
+
+.bar.left {
+	top: 0; bottom: 0;
+	writing-mode: vertical-rl;
+	text-orientation: sideways;
+}
+
+.bar.top {
+	transform: rotate(180deg);
+	top: 0; left: 0; right: 0;
+}
+
+.bar.right {
+	top: 0; bottom: 0; right: 0;
+	transform: rotate(180deg);
+	writing-mode: vertical-lr;
+	text-orientation: sideways;
+}
 </style>
 </head>
 <body>
