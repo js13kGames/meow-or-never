@@ -149,7 +149,7 @@ function setup(nplayers) {
 window.onload = function() {
 	document.body.innerHTML = `
 <div class="dialog">
-<p>Number of players</p>
+<p>Number of players:</p>
 <a href="#" onclick="setup(2); return false" class="play">2</a>
 <a href="#" onclick="setup(3); return false" class="play">3</a>
 <a href="#" onclick="setup(4); return false" class="play">4</a>
