@@ -105,6 +105,14 @@ function newCard(side, slot) {
 	return card
 }
 
+function newCatCard(side, slot) {
+	const card = newCard(side, slot)
+	card.classList.add("cat")
+	card.game.value = 0
+	card.innerHTML = "&nbsp"
+	return card
+}
+
 function setup(nplayers) {
 	if (!document.fullscreenElement) {
 		document.documentElement.requestFullscreen()
@@ -128,9 +136,11 @@ function setup(nplayers) {
 		document.body.appendChild(bar)
 		TURNBARS.push(bar)
 
-		for (let j = 0; j < cardsPerPlayer; ++j) {
+		const last = cardsPerPlayer - 1;
+		for (let j = 0; j < last; ++j) {
 			document.body.appendChild(newCard(side, j))
 		}
+		document.body.appendChild(newCatCard(side, last))
 	}
 
 	updateTurnBars()
