@@ -59,7 +59,8 @@ function playCard(card) {
 			Math.random() * 10 - 5}deg) scale(2)`
 	})
 
-	if (topCard != null && topCard.game.value > card.game.value) {
+	if (topCard != null && card.game.value > 0 &&
+			topCard.game.value > card.game.value) {
 		const backCard = topCard
 		alignCard(backCard, card.game.side, card.game.slot)
 		backCard.onclick = function() {
