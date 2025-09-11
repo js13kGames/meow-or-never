@@ -4,7 +4,8 @@ const SLOTS = [-1.5, -0.5, 0.5, 1.5],
 	PLAYERS = [],
 	TURNBARS = []
 
-let zIndex = 999,
+let flash,
+	zIndex = 999,
 	turn = 0,
 	topCard
 
@@ -22,6 +23,13 @@ function alignCard(card, side, slot) {
 
 function playCard(card) {
 	if (card.game.side != PLAYERS[turn]) {
+		flash.animate([
+			{background: "#f00f"},
+			{background: "#0000"},
+		],{
+			duration: 200,
+			fill: "forwards"
+		}).play()
 		return
 	}
 
@@ -92,6 +100,7 @@ function setup(nplayers) {
 	}
 
 	document.body.innerHTML = ""
+	flash = addElement("div", "flash")
 
 	const sides = ["bottom", "left", "top", "right"],
 		cardsPerPlayer = SLOTS.length
