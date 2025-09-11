@@ -37,15 +37,32 @@ a {
 	filter: drop-shadow(0 0 .1em black);
 }
 
-.play {
+.button {
 	background: var(--fg); color: var(--inv);
-	display: inline-block;
-	padding: .1em .3em;
-	font-size: 250%;
+	display: block;
+	padding: .5em 1em;
 	font-weight: bold;
 	text-align: center;
 	border-radius: .1em;
 	margin: .2em;
+}
+
+.button.player {
+	display: inline-block;
+	padding: .1em .3em;
+	font-size: 250%;
+}
+
+.scores {
+	width: 100%;
+	margin-bottom: 1em;
+}
+.name {
+	width: 100%;
+	text-align: left;
+}
+.score {
+	text-align: right;
 }
 
 .card {
@@ -153,5 +170,5 @@ a {
 </head>
 <body>
 </body>
-<script src="src.js"></script>
+<script src="src.js">This website requires JavaScript.</script>
 </html>
