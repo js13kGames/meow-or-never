@@ -106,21 +106,11 @@ function newCard(side, slot) {
 }
 
 function setup(nplayers) {
-	function createElement(name, className, html) {
-		const e = document.createElement(name)
-		if (className) { e.className = className }
-		if (html) { e.innerHTML = html }
-		return e
-	}
-
-	function addElement(name, className, html) {
-		const e = createElement(name, className, html)
-		document.body.appendChild(e)
-		return e
-	}
-
 	document.body.innerHTML = ""
-	flash = addElement("div", "flash")
+
+	flash = document.createElement("div")
+	flash.className = "flash"
+	document.body.appendChild(flash)
 
 	const sides = ["bottom", "left", "top", "right"],
 		cardsPerPlayer = SLOTS.length
@@ -128,7 +118,10 @@ function setup(nplayers) {
 		const side = sides[i * step]
 		PLAYERS.push(side)
 
-		const bar = addElement("div", "bar " + side, "TURN")
+		const bar = document.createElement("div")
+		bar.className = "bar " + side
+		bar.innerHTML = "TURN"
+		document.body.appendChild(bar)
 		TURNBARS.push(bar)
 
 		for (let j = 0; j < cardsPerPlayer; ++j) {
