@@ -106,6 +106,10 @@ function newCard(side, slot) {
 }
 
 function setup(nplayers) {
+	if (!document.fullscreenElement) {
+		document.documentElement.requestFullscreen()
+	}
+
 	document.body.innerHTML = ""
 
 	flash = document.createElement("div")
