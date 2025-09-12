@@ -2,7 +2,8 @@
 
 const SLOTS = [-1.5, -0.5, 0.5, 1.5],
 	SIDES = [],
-	TURNBARS = []
+	TURNBARS = [],
+	DRAWING_STACK = []
 
 let flash,
 	zIndex,
@@ -10,11 +11,15 @@ let flash,
 	topCard,
 	catsPlayed
 
+function updateCardsLeft() {
+	const bar = TURNBARS[currentPlayer]
+	bar.innerHTML = `${DRAWING_STACK.length} cards left`
+	bar.style.visibility = "visible"
+}
+
 function updateTurnBars() {
 	TURNBARS.forEach((e) => e.style.visibility = "hidden")
-	const bar = TURNBARS[currentPlayer]
-	bar.innerHTML = "TURN"
-	bar.style.visibility = "visible"
+	updateCardsLeft()
 }
 
 function alignCard(card, side, slot) {
@@ -50,6 +55,10 @@ function sumHand(player) {
 }
 
 function endRound() {
+	zzfx(...[,,432,.07,.26,.11,,1.4,,,478,.08,.04,,,,,.76,.2,.01])
+	updateCardsLeft()
+	currentPlayer = -1
+
 	let max = 0, winner = -1, points = ""
 	for (let i = 0, players = SIDES.length; i < players; ++i) {
 		const sum = sumHand(i)
@@ -138,17 +147,18 @@ function playCard(card) {
 	} else {
 		// Put this card on the stack and draw a new card.
 		const next = newCard(card.game.side, card.game.slot)
-		document.body.appendChild(next)
-		next.style.transform = "translate(-60vw, -60vh)"
-		requestAnimationFrame(() => {
-			next.style.transform = ""
-		})
-		zzfx(...[4.2,,60,.03,.01,.06,,3.7,,125,,,,.6,,,.02,.71,.04,,561])
+		if (next != null) {
+			document.body.appendChild(next)
+			next.style.transform = "translate(-60vw, -60vh)"
+			requestAnimationFrame(() => {
+				next.style.transform = ""
+			})
+			zzfx(...[4.2,,60,.03,.01,.06,,3.7,,125,,,,.6,,,.02,.71,.04,,561])
+		}
 	}
 
-	if (isCat && ++catsPlayed >= SIDES.length) {
-		zzfx(...[,,432,.07,.26,.11,,1.4,,,478,.08,.04,,,,,.76,.2,.01])
-		currentPlayer = -1
+	if ((isCat && ++catsPlayed >= SIDES.length) ||
+			DRAWING_STACK.length < 1) {
 		endRound()
 		return
 	}
@@ -158,9 +168,15 @@ function playCard(card) {
 	updateTurnBars()
 }
 
-function newCard(side, slot) {
-	const card = document.createElement("a"),
-		value = 1 + (Math.random() * 5 | 0)
+function newCard(side, slot, value) {
+	const card = document.createElement("a")
+
+	if (value === undefined) {
+		if (DRAWING_STACK.length < 1) {
+			return null
+		}
+		value = DRAWING_STACK.pop()
+	}
 
 	card.href = "#"
 	card.onclick = function() {
@@ -179,16 +195,36 @@ function newCard(side, slot) {
 }
 
 function newCatCard(side, slot) {
-	const card = newCard(side, slot)
+	const card = newCard(side, slot, 0)
 	card.classList.add("cat")
-	card.game.value = 0
 	card.innerHTML = "&nbsp"
 	return card
+}
+
+function shuffle(array) {
+	for (let i = array.length - 1; i-- > 0; ) {
+		const j = Math.floor(Math.random() * (i + 1))
+		;[array[i], array[j]] = [array[j], array[i]]
+	}
+	return array
 }
 
 function setup(nplayers, startPlayer) {
 	SIDES.length = 0
 	TURNBARS.length = 0
+	DRAWING_STACK.length = 0
+
+	const stack = []
+	for (let i = 0; i < nplayers; ++i) {
+		for (let j = 1; j < 7; ++j) {
+			stack.push(j)
+		}
+		for (let j = 4; j < 7; ++j) {
+			stack.push(j)
+		}
+	}
+	DRAWING_STACK.push(...shuffle(stack))
+
 	zIndex = 999
 	currentPlayer = startPlayer % nplayers
 	topCard = null
@@ -213,7 +249,7 @@ function setup(nplayers, startPlayer) {
 
 		const last = cardsPerPlayer - 1;
 		for (let j = 0; j < last; ++j) {
-			document.body.appendChild(newCard(side, j))
+			document.body.appendChild(newCard(side, j, j + 1))
 		}
 		document.body.appendChild(newCatCard(side, last))
 	}
@@ -234,7 +270,7 @@ window.onload = function() {
 <h1>Meow or Never</h1>
 <h2>A quick card game.</h2>
 <ol>
-<li>Play ≥ last card</li>
+<li>Play ≥ last card.</li>
 <li>Can’t? Pick one to swap.</li>
 <li>Black Cat anytime.</li>
 <li>Ends when the last Cat is played.</li>
