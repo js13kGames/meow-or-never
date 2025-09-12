@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, user-scalable=0"/>
+<title>Meow or Never</title>
 <style>
 :root {
 	--card-width: 1.3em;
@@ -21,18 +22,33 @@ html, body {
 	font: 130% monospace; color: var(--fg);
 }
 
+h1 {
+	margin-bottom: 0;
+}
+
+h2 {
+	margin: 0 0 2em;
+	font-size: 75%;
+}
+
 a {
 	color: var(--fg);
 	text-decoration: none;
 }
 
+li {
+	margin-bottom: .5em;
+	text-align: left;
+}
+
 .dialog {
 	position: fixed;
 	top: 50svh; left: 50vw;
-	transform: translate(-50%, -50%);
+	width: 80vw;
 	text-align: center;
+	transform: translate(-50%, -50%);
 	background: var(--inv); color: var(--fg);
-	padding: .5em 1em;
+	padding: .5em 1em 1em;
 	border-radius: .3em;
 	filter: drop-shadow(0 0 .1em black);
 }

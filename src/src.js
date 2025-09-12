@@ -231,7 +231,16 @@ function init(nplayers) {
 window.onload = function() {
 	document.body.innerHTML = `
 <div class="dialog">
-<p>Number of players:</p>
+<h1>Meow or Never</h1>
+<h2>A quick card game.</h2>
+<ol>
+<li>Play ≥ last card</li>
+<li>Can’t? Pick one to swap.</li>
+<li>Black Cat anytime.</li>
+<li>Ends when the last Cat is played.</li>
+<li>Highest hand total wins.</li>
+<li>Now choose number of players:</li>
+</ol>
 <a href="#" onclick="init(2); return false" class="button player">2</a>
 <a href="#" onclick="init(3); return false" class="button player">3</a>
 <a href="#" onclick="init(4); return false" class="button player">4</a>
