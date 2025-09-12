@@ -259,7 +259,11 @@ function setup(nplayers, startPlayer) {
 
 function init(nplayers) {
 	if (!document.fullscreenElement) {
-		document.documentElement.requestFullscreen()
+		try {
+			document.documentElement.requestFullscreen()
+		} catch(e) {
+			// Ignore. Happens in Safari on iPhone.
+		}
 	}
 	setup(nplayers, Math.round(Math.random() * nplayers))
 }
