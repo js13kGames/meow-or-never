@@ -244,6 +244,7 @@ function setup(nplayers, startPlayer) {
 
 		const bar = document.createElement("div")
 		bar.className = "bar " + side
+		bar.style.zIndex = 99999
 		document.body.appendChild(bar)
 		TURNBARS.push(bar)
 
