@@ -13,7 +13,7 @@ let flash,
 
 function updateCardsLeft() {
 	const bar = TURNBARS[currentPlayer]
-	bar.innerHTML = `${DRAWING_STACK.length} cards left`
+	bar.innerHTML = `YOUR TURN, ${DRAWING_STACK.length} CARDS LEFT`
 	bar.style.visibility = "visible"
 }
 
@@ -110,7 +110,7 @@ function playCard(card) {
 
 	if (!atTurn || !canPlay) {
 		if (atTurn) {
-			TURNBARS[currentPlayer].innerHTML = "PLAY A HIGHER CARD"
+			TURNBARS[currentPlayer].innerHTML = "MUST PLAY A HIGHER CARD"
 		}
 		zzfx(...[2.1,,82,,.02,.006,4,4,,25,,,,,15,,.11,.5,.02])
 		flash.animate([
